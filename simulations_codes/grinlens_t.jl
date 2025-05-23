@@ -19,6 +19,7 @@ Base.@kwdef struct Parameters
     rho     # kg m^-3
     Cp      # J kg-1 K-1
     focale::Function  # thermally induced focal length of liquid slice
+    model
 
 
     # input beam parameters (s)
@@ -43,29 +44,60 @@ function Parameters(;
     rho = 1000,         # kg m^-3
     Cp = 4186,          # J kg-1 K-1
     focale = Nothing,   # let default definition
+    model = :gaussian,  # model type: :parabolic or :gaussian
     z0 = 1e-2,          # initial position of the beam is 1 cm far from entry (m)
     w0 = 6.5e-6,        # initial waist of laser set to 6.5 µm (usually lower) (m)
     l = 1e-5,           # propagation step of 10 µm (l)
     steps = 0:l:4e-2,   # total computation of propagation on 3 cm of water (m)
     t=Inf,
 )
-    if α == Nothing 
-        file = CSV.File(open("wvlengths.csv"),header =false, transpose=true)
-        k=1
-        for (i) in (1:size(file)[1])
-            temp = abs(λ-file[i][1])*1e9
-            if temp < .5 
-                k = i
-                println(λ, " coef ", file[k][2])
-            end
-        end
-        α = file[k][2]
+   # file = CSV.File(open("simulations_codes/wvlengths.csv"),header =false, transpose=true)
+   # k=1
+   # for (i) in (1:size(file)[1])
+   #     temp = abs(λ-file[i][1])*1e9
+   #     if temp < .5 
+   #         k = i
+   #         println(λ, " coef ", file[k][2])
+   #     end
+   # end
+   # α = file[k][2]
+   # if α == Nothing 
+   #     file = CSV.File(open("simulations_codes/wvlengths.csv"),header =false, transpose=true)
+   #     k=1
+   #     for (i) in (1:size(file)[1])
+   #         temp = abs(λ-file[i][1])*1e9
+   #         if temp < .5 
+   #             k = i
+   #             println(λ, " coef ", file[k][2])
+   #         end
+   #     end
+   #     α = file[k][2]
+   # end
+   #if focale == Nothing
+   #    if model == :parabolic
+   #        # Default: Whinnery's parabolic thermal lens approximation 
+   #        focale = (l, w) -> (n * π * k * w^2) / (α * P * l * dndT) * (1 + (w^2 / (4 * (k / (rho * Cp)))) / (2 * t))
+   #    elseif model == :gaussian
+   #        # Optional: Gaussian approximation with empirical constant C based on (Bogan et al. 2015 and Simonelli et al. 2019).
+   #        C = 1.3  # Empirical constant for Gaussian beam model
+   #        focale = (l, w) -> (2*3.14*n * k * w^2) / (C * α * P * l * dndT) * (1 + (w^2 / (4 * (k / (rho * Cp)))) / (2 * t))
+   #    else
+   #        error("Unknown model type: choose :parabolic or :gaussian")
+   #    end
+   #end
+    if model == :parabolic
+      # Default: Whinnery's parabolic thermal lens approximation 
+      focale = (l, w) -> (n * π * k * w^2) / (α * P * l * dndT) * (1 + (w^2 / (4 * (k / (rho * Cp)))) / (2 * t))
+    elseif model == :gaussian
+      # Optional: Gaussian approximation with empirical constant C based on (Bogan et al. 2015 and Simonelli et al. 2019).
+      C = 1.3  # Empirical constant for Gaussian beam model
+      focale = (l, w) -> (2*3.14*n * k * w^2) / (C * α * P * l * dndT) * (1 + (w^2 / (4 * (k / (rho * Cp)))) / (2 * t))
+    else
+      error("Unknown model type: choose :parabolic or :gaussian")
     end
-    if focale == Nothing # define default model depending on medium parameters
-        focale = (l,w) ->  (n*π * k * w^2 / ( α * P * l * dndT))*(1+(w^2/(4*(k/(rho*Cp))))/(2*t))  # whinnery 2002
-    end
+        
 
-    return Parameters(n,λ,P,k,α,dndT,rho,Cp,focale,z0,w0,l,steps,t)
+    return Parameters(n,λ,P,k,α,dndT,rho,Cp,focale,model,z0,w0,l,steps,t)
 end
 
 # observables
