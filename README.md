@@ -1,12 +1,12 @@
 # 🔬 ThermalShift — Simulations & Analysis Toolkit
 
-[![arXiv](https://img.shields.io/badge/arXiv-2504.02969-b31b1b.svg)](https://doi.org/10.48550/arXiv.2504.02969)
+[![DOI](https://img.shields.io/badge/DOI-10.1364%2FBOE.17.001064-blue)](https://doi.org/10.1364/BOE.17.001064)
 
 This repository contains the codebase for analyzing and simulating **thermal lensing effects** in two-photon light-sheet microscopy, as presented in our preprint:
 
 > **Hubert, A.**, Trentesaux, H., Pujol, T., Debrégeas, G., & Bormuth, V. (2025).  
-> [*Thermal Lensing Effects in Two-Photon Light-Sheet Microscopy*](https://doi.org/10.48550/arXiv.2504.02969).  
-> _arXiv e-prints_, arXiv:2504.02969.
+> [*Thermal Lensing Effects in Two-Photon Light-Sheet Microscopy*](https://doi.org/10.1364/BOE.564339).  
+> **Biomedical Optics Express**, **17**, 1064–1073.
 
 ---
 
@@ -32,11 +32,11 @@ This repository contains the codebase for analyzing and simulating **thermal len
 If you use this repository, please cite our preprint:
 
 ```bibtex
-@misc{hubert2025thermal,
-title = {Thermal Lensing Effects in Two-Photon Light-Sheet Microscopy},
-author = {Hubert, Antoine and Trentesaux, Hugo and Pujol, Thomas and Debrégeas, Georges and Bormuth, Volker},
-year = {2025},
-eprint = {2504.02969},
-archivePrefix = {arXiv},
-primaryClass = {physics.bio-ph}
+@article{hubert2026thermal,
+  title   = {Thermal lensing effects in two-photon light-sheet microscopy},
+  author  = {Hubert, Antoine and Trentesaux, Hugo and Pujol, Thomas and Debrégeas, Georges and Bormuth, Volker},
+  journal = {Biomedical Optics Express},
+  volume  = {17},
+  pages   = {1064--1073},
+  year    = {2026}
 }
