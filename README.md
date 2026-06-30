@@ -1,6 +1,6 @@
-# 🔬 ThermalShift — Simulations & Analysis Toolkit
+# 🔬 ThermalLens — Simulations & Analysis Toolkit
 
-[![DOI](https://img.shields.io/badge/DOI-10.1364%2FBOE.17.001064-blue)](https://doi.org/10.1364/BOE.17.001064)
+[![DOI](https://img.shields.io/badge/DOI-10.1364%2FBOE.564339-blue)](https://doi.org/10.1364/BOE.564339)
 
 This repository contains the codebase for analyzing and simulating **thermal lensing effects** in two-photon light-sheet microscopy, as presented in our preprint:
 
